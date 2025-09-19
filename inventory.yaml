@@ -1,0 +1,49 @@
+# Server 1 (Ubuntu)
+[Server1_Brdg]
+192.168.88.10
+
+[Server1_NAT]
+192.168.245.130
+
+# Server 2 (Ubuntu)
+[Server2_Brdg]
+192.168.88.16
+
+[Server2_NAT]
+192.168.245.131
+
+# Server 3 (CentOS)
+[Server3_Brdg]
+192.168.88.29
+
+[Server3_NAT]
+192.168.245.132
+
+# Grouping Bridged IP
+[IP_Bridged:children]
+Server1_Brdg
+Server2_Brdg
+Server3_Brdg
+
+# Grouping NAT IP
+[IP_NAT:children]
+Server1_NAT
+Server2_NAT
+Server3_NAT
+
+# Assign Server1 as Web Server
+[web_servers:children]
+Server1_Brdg
+Server1_NAT
+Server3_Brdg
+Server3_NAT
+
+# Assign Server2 as DB Server
+[db_servers:children]
+Server3_Brdg
+Server3_NAT
+
+# Assign Server3 as File Server
+[file_servers:children]
+Server2_Brdg
+Server2_NAT
